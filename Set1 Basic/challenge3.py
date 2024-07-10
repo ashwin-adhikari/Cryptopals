@@ -14,7 +14,7 @@ def valid(char):
     valid_list = string.ascii_letters+"'\" ?.\n-:#$_"+"0123456789"
     return char in valid_list
 
-def decrypt_hex(cipher:bytes):
+def single_byte_xor(cipher:bytes):
     possible_text= {}
     for key in range(256):
         decrypt_cipher = ''.join(chr(b ^ key) for b in cipher)
@@ -26,4 +26,4 @@ def decrypt_hex(cipher:bytes):
 if __name__ == "__main__":
     raw = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
     cipher_text = bytes.fromhex(raw)
-    print(decrypt_hex(cipher=cipher_text))
+    print(single_byte_xor(cipher=cipher_text))

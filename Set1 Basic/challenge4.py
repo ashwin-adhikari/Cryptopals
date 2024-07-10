@@ -4,7 +4,7 @@ Find the single character XOR from
 
 """
 
-from challenge3 import decrypt_hex
+from challenge3 import single_byte_xor
 
 with open('./04.txt','r') as f:
    
@@ -12,7 +12,7 @@ with open('./04.txt','r') as f:
 
     for line in f:
         ciphertext = bytes.fromhex(line.strip())
-        decrypt = decrypt_hex(cipher=ciphertext)
+        decrypt = single_byte_xor(cipher=ciphertext)
 
         if decrypt:
             decrypted_text[line]=decrypt  
