@@ -15,10 +15,10 @@ a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f
 """
 
 def repeating_xor(plaintext:bytes, key:bytes):
-    cipher=b''
-    for i, byte in enumerate(plaintext):
-        cipher+= bytes([byte ^ key[i % len(key)]])
-    return cipher
+    return bytes([b ^ key[i%len(key)] for i, b in enumerate(plaintext)])
+
+    
+
 
 if __name__ == "__main__":
     plaintext = b"Burning 'em, if you ain't quick and nimble I go crazy when I hear a cymbal"
