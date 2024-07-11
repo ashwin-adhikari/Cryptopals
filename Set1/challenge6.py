@@ -43,34 +43,31 @@ Set 1, Challenge 6
 import base64
 from challenge3 import single_byte_xor
 from challenge5 import repeating_xor
+from itertools import combinations
 
 def hamming_dist(str1, str2):
-    if len(str1)!= len(str2):
-        return None
-    distance = 0
-    for b1, b2 in zip(str1, str2):
-        diff = b1 ^ b2  # XOR to find differing bits
-        distance += bin(diff).count('1')   #Count the number of 1 bits
-    return distance
+    assert len(str1) == len(str2)
+    return sum(bin(byte1 ^ byte2).count("1") for byte1, byte2 in zip(str1, str2))
 
 
-# assert hamming_dist(b'this is a test', b'wokka wokka!!!') == 37
-
+max_keysize = 40
 def find_keysize(ciphertext):
     distances = []
-    for keysize in range(2,41):
+    for keysize in range(2, max_keysize+1):
         chunks = [ciphertext[i:i+keysize] for i in range(0, len(ciphertext),keysize)] 
-        pairs = list(zip(chunks, chunks[1:]))
-        if len(pairs) > 1:
-            if all(len(a) == len(b) for a, b in pairs):
-                distance_sum = sum(hamming_dist(a, b) for a, b in pairs)
-                normalized_distance = distance_sum / (len(pairs) * keysize)
-                distances.append((keysize, normalized_distance))
-            else:
-                print(f"Chunks for keysize {keysize} are not of equal length. Skipping...")
+        pairs = list(combinations(chunks[:4], 2))
+        # combination() function creates combination of the elements
+        # if chunks[:4] = [A, B, C, D] => combination would be [(A,B), (A,C), (A,D), (B,C),(C,D)]
+        # if we used zip them it would generate [(A,B), (B,C), (C,D)] 
+        distance = sum(hamming_dist(a, b) for a, b in pairs)
+        # each chunk's hamming distance is computed
+        normalized_distance = distance / keysize
+        distances.append((keysize, normalized_distance))
+        # mormalized distance is appended to list
+    # it returns min value of 0th element ie keysize after referencing minimum value of 1st element ie normalized distance  
+    return min(distances, key=lambda x: x[1])[0]
+
     
-    distances.sort(key=lambda x: x[1])
-    return distances[0][0]
 
 def break_into_blocks(ciphertext, keysize):
     return [ciphertext[i:i+keysize] for i in range(0, len(ciphertext),keysize)]
@@ -109,6 +106,7 @@ def score_text(text):
 
 
 if __name__ == "__main__":
+    assert hamming_dist(b'this is a test', b'wokka wokka!!!') == 37
     file_path = r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\Set1\06.txt'
     with open(file_path,'r') as f:
         ciphertext_base64 = f.read().strip()
@@ -129,5 +127,4 @@ if __name__ == "__main__":
     print("key:", key.decode())
     print("Decrypted Message: ")
     print(decrypted_message.decode())
-
 
