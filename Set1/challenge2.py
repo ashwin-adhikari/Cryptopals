@@ -28,15 +28,8 @@ If your function works properly, then when you feed it the string:
 
 
 
-def byte_xor(byte1:bytes, byte2:bytes)->bytes:
-    xor_result = bytearray(len(byte1))
-    for i in range(len(byte1)):
-        xor_result[i]= byte1[i] ^ byte2[i]
-    
-    xor_result = bytes(xor_result)
-    hex_result = xor_result.hex()
-    return hex_result
-
+def byte_xor(a, b):
+    return bytes(x ^ y for x, y in zip(a, b))
 if __name__ == "__main__":
     
     hex1 = input("Enter hex:")
@@ -44,5 +37,5 @@ if __name__ == "__main__":
     byte1=bytes.fromhex(hex1)
     byte2=bytes.fromhex(hex2)
     
-    print(byte_xor(byte1=byte1,byte2=byte2))
+    print(byte_xor(byte1,byte2).hex())
 
