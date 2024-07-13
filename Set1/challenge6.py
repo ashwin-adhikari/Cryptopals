@@ -107,7 +107,7 @@ def score_text(text):
 
 if __name__ == "__main__":
     assert hamming_dist(b'this is a test', b'wokka wokka!!!') == 37
-    file_path = r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\Set1\06.txt'
+    file_path = r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\data\06.txt'
     with open(file_path,'r') as f:
         ciphertext_base64 = f.read().strip()
 

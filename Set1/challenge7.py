@@ -16,7 +16,7 @@ def decrypt_aes(cipher, key):
     return data.decrypt(cipher)
 
 if __name__ == "__main__":
-    filepath = r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\Set1\07.txt'
+    filepath = r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\data\07.txt'
     with open(filepath,'r') as f:
         cipher = base64.b64decode(f.read())
     

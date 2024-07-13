@@ -24,7 +24,7 @@ def detect_ecb_from_file(ciphertexts):
 
 
 if __name__ == "__main__":
-    filepath =  r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\Set1\08.txt'
+    filepath =  r'C:\Users\Ripple\Desktop\Cryptopals\Cryptopals\data\08.txt'
     with open(filepath,'r') as f:
         ciphertexts = f.readlines()
         ciphertexts = [line.strip() for line in ciphertexts]  
