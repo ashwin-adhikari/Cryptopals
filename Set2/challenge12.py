@@ -58,10 +58,8 @@ def detect_ecb(oracle):
         return True
     raise Exception("oh no!")
 
-def bytes_to_chunks(b: bytes, chunk_size: int, quiet:True) -> list[bytes]:
+def bytes_to_chunks(b: bytes, chunk_size: int) -> list[bytes]:
     chunks = [b[ind:ind+chunk_size] for ind in range (0, len(b), chunk_size)]
-    if not quiet:
-        print(f"Chunked input with size {chunk_size}: {chunks}")
     return chunks 
 
 def guess_byte(prefix: bytes, target: bytes, oracle) -> bytes:
@@ -82,7 +80,7 @@ if __name__ == "__main__":
 
     assert detect_ecb(oracle)
 
-    ciphertext = [bytes_to_chunks(oracle(bytes(15-n)), block_size, quiet=True) for n in range(16)]
+    ciphertext = [bytes_to_chunks(oracle(bytes(15-n)), block_size) for n in range(16)]
     transposed = [block for blocks in zip(*ciphertext) for block in blocks]
     blocks_to_attack = transposed[:postfix_len]
 
